@@ -8,3 +8,23 @@ body{
   background-color: #242424;
   font-family: "Rubik", sans-serif;
 }
+
+.container{
+  width: 1120px;
+  margin: 0 auto;
+}
+
+.search__movie{
+  width: 650px;
+  height: 60px;
+  border-radius: 10px;
+  font-size: 24px;
+  margin: 0 auto;
+  display: block;
+  margin-top: 70px;
+  padding-left: 25px;
+}
+
+.search__movie::placeholder{
+  font-weight: 700;
+}
