@@ -11,11 +11,29 @@ function App() {
     setSearchQuery(event.target.value);
   }
 
-  //  movies on main page
+  //  Movies on main page
   const [movies, setMovies] = useState([]);
 
   // Loading circle during API request
   const [isLoading, setIsLoading] = useState(false);
+
+  // Select a movie by poster
+  const [selectMovie, setSelectMovie] = useState(null);
+
+  // Object for working with modal window
+  const [modal, setModal] = useState({
+    isActive: false,
+    type: "",
+    movieId: null
+  });
+
+  function openSelectMovie(id){
+    setModal({
+      isActive: true,
+      type: "movie",
+      movieId: id
+    });
+  }
 
   useEffect(() => {
 
@@ -40,7 +58,7 @@ function App() {
         setIsLoading(false);
       })
   }, [searchQuery]);
-console.log(movies);
+
   return (
     <>
       <div className="container">
@@ -59,13 +77,16 @@ console.log(movies);
                     element.Poster
                   :
                   noPoster
-                  } alt={element.Title} />
+                  }
+                  onClick={() => openSelectMovie(element.imdbID)} 
+                  alt={element.Title} />
                     <h2 className="movie__title">{element.Title}</h2>
                   </div>
                 )))
               )}
         </div>
       </div>
+      <ModalWindow isActive={modal.isActive} windowType={modal.type} />
     </>
   )
 }
