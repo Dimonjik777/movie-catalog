@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 
-const ModalWindow = ({ isActive, windowType, movieId }) => {
+const ModalWindow = ({ isActive, windowType, movieId, onCloseModal }) => {
 
   // Defines the height of the window
-  let height = windowType == "movie" ? 380 : 900;
+  let height = windowType == "movie" && 380 ;
 
   // Detailed info about movie
   const [movieInfo, setMovieInfo] = useState(null);
@@ -13,7 +13,6 @@ const ModalWindow = ({ isActive, windowType, movieId }) => {
 
   useEffect(() => {
 
-    
     if (!movieId) return;
 
     setIsLoading(true);
@@ -64,7 +63,8 @@ const ModalWindow = ({ isActive, windowType, movieId }) => {
       <div className={isActive ?
         "modal__bg active" :
         "modal__bg"
-      }></div>
+      }
+      onClick={onCloseModal}></div>
     </>
   )
 }

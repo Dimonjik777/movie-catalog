@@ -27,11 +27,21 @@ function App() {
     movieId: null
   });
 
+  // Open movie in modal
   function openSelectMovie(id){
     setModal({
       isActive: true,
       type: "movie",
       movieId: id
+    });
+  }
+
+  // Close modal when bg clicked
+  function closeModal(){
+    setModal({
+      isActive: false,
+      type: "",
+      movieId: null
     });
   }
 
@@ -86,7 +96,7 @@ function App() {
               )}
         </div>
       </div>
-      <ModalWindow isActive={modal.isActive} windowType={modal.type} movieId={modal.movieId} />
+      <ModalWindow isActive={modal.isActive} windowType={modal.type} movieId={modal.movieId} onCloseModal={closeModal} />
     </>
   )
 }
