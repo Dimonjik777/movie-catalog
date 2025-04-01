@@ -86,7 +86,7 @@ function App() {
               )}
         </div>
       </div>
-      <ModalWindow isActive={modal.isActive} windowType={modal.type} />
+      <ModalWindow isActive={modal.isActive} windowType={modal.type} movieId={modal.movieId} />
     </>
   )
 }

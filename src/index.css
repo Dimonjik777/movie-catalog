@@ -88,6 +88,11 @@ body{
   transition: transform .5s ease, opacity .5s ease;
   opacity: 0;
   pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: black;
+  padding: 40px 45px;
 }
 
 .modal__window.active{
@@ -111,4 +116,13 @@ body{
 .modal__bg.active{
   opacity: 1;
   pointer-events: all;
+}
+
+.modal__img{
+  height: 350px;
+  margin-right: 25px;
+}
+
+.modal__window div{
+  width: 800px;
 }
