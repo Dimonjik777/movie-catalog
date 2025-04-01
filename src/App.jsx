@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import SearchMovies from "./components/SearchMovies"
+import noPoster from "./assets/no poster.png"
 
 function App() {
 
@@ -53,7 +54,11 @@ console.log(movies);
                 :
                 (movies.map(element => (
                   <div className="movie" key={element.imdbID}>
-                    <img className="movie__img" src={element.Poster} alt={element.Title} />
+                    <img className="movie__img" src={element.Poster !== "N/A" ?
+                    element.Poster
+                  :
+                  noPoster
+                  } alt={element.Title} />
                     <h2 className="movie__title">{element.Title}</h2>
                   </div>
                 )))
