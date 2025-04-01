@@ -54,7 +54,9 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal }) => {
                 <h2>Genre: {movieInfo.Genre.toLowerCase()}</h2>
                 <h2>Type: {movieInfo.Type}</h2>
                 <h2>imdbRating: {movieInfo.imdbRating}</h2>
-                <p>Plot: {movieInfo.Plot}</p>
+                <p>Plot: {movieInfo.Plot.length > 500 ? 
+                movieInfo.Plot.slice(0, 500) + "..." :
+                movieInfo.Plot}</p>
               </div>
             </>
           ))}
