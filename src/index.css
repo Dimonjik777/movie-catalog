@@ -44,3 +44,20 @@ body{
   width: 200px;
   height: 300px;
 }
+
+.loading{
+  display: block;
+  margin: 0 auto;
+  width: 96px;
+  animation: 2s spin linear infinite;
+}
+
+@keyframes spin {
+  from{
+    transform: rotate(0);
+  }
+
+  to{
+    transform: rotate(360deg);
+  }
+}
