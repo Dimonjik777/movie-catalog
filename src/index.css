@@ -28,3 +28,19 @@ body{
 .search__movie::placeholder{
   font-weight: 700;
 }
+
+.movies{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.movie{
+  width: 200px;
+}
+
+.movie__img{
+  width: 200px;
+  height: 300px;
+}
