@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import SearchMovies from "./components/SearchMovies"
 import ModalWindow from "./components/ModalWindow";
 import noPoster from "./assets/no poster.png"
+import useModal from "./hooks/useModal";
 
 function App() {
 
@@ -17,33 +18,8 @@ function App() {
   // Loading circle during API request
   const [isLoading, setIsLoading] = useState(false);
 
-  // Select a movie by poster
-  const [selectMovie, setSelectMovie] = useState(null);
-
-  // Object for working with modal window
-  const [modal, setModal] = useState({
-    isActive: false,
-    type: "",
-    movieId: null
-  });
-
-  // Open movie in modal
-  function openSelectMovie(id){
-    setModal({
-      isActive: true,
-      type: "movie",
-      movieId: id
-    });
-  }
-
-  // Close modal when bg clicked
-  function closeModal(){
-    setModal({
-      isActive: false,
-      type: "",
-      movieId: null
-    });
-  }
+  // using hook for modal window
+  const {modal, openSelectMovie, closeModal} = useModal();
 
   useEffect(() => {
 
@@ -78,18 +54,18 @@ function App() {
           {
             isLoading ? (<img className="loading" src="src/assets/circle-loading.png" />)
               :
-              ( searchQuery != "" && movies.length == 0 ?
+              (searchQuery != "" && movies.length == 0 ?
                 (<p className="not__found">Movie not found</p>)
                 :
                 (movies.map(element => (
                   <div className="movie" key={element.imdbID}>
                     <img className="movie__img" src={element.Poster !== "N/A" ?
-                    element.Poster
-                  :
-                  noPoster
-                  }
-                  onClick={() => openSelectMovie(element.imdbID)} 
-                  alt={element.Title} />
+                      element.Poster
+                      :
+                      noPoster
+                    }
+                      onClick={() => openSelectMovie(element.imdbID)}
+                      alt={element.Title} />
                     <h2 className="movie__title">{element.Title}</h2>
                   </div>
                 )))
