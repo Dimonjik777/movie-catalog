@@ -126,3 +126,7 @@ body{
 .modal__window div{
   width: 800px;
 }
+
+.modal__loading{
+  margin: auto;
+}
