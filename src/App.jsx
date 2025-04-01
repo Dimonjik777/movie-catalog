@@ -38,7 +38,7 @@ function App() {
         setIsLoading(false);
       })
   }, [searchQuery]);
-
+console.log(movies);
   return (
     <>
       <div className="container">
@@ -48,12 +48,15 @@ function App() {
           {
             isLoading ? (<img className="loading" src="src/assets/circle-loading.png" />)
               :
-              (movies.map(element => (
-                <div className="movie" key={element.imdbID}>
-                  <img className="movie__img" src={element.Poster} alt={element.Title} />
-                  <h2 className="movie__title">{element.Title}</h2>
-                </div>
-              ))
+              ( searchQuery != "" && movies.length == 0 ?
+                (<p className="not__found">Movie not found</p>)
+                :
+                (movies.map(element => (
+                  <div className="movie" key={element.imdbID}>
+                    <img className="movie__img" src={element.Poster} alt={element.Title} />
+                    <h2 className="movie__title">{element.Title}</h2>
+                  </div>
+                )))
               )}
         </div>
       </div>
