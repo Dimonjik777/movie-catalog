@@ -43,6 +43,13 @@ body{
 .movie__img{
   width: 200px;
   height: 300px;
+  transition: .5s ease all;
+  transform:scale(100%);
+  cursor: pointer;
+}
+
+.movie__img:hover{
+  transform: scale(110%);
 }
 
 .loading{
