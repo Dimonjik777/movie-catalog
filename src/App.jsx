@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import SearchMovies from "./components/SearchMovies"
+import ModalWindow from "./components/ModalWindow";
 import noPoster from "./assets/no poster.png"
 
 function App() {

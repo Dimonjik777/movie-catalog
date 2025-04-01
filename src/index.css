@@ -68,3 +68,40 @@ body{
   text-align: center;
   margin: 0 auto;
 }
+
+.modal__window{
+  width: 1000px;
+  border-radius: 10px;
+  background-color: #fff;
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  transition: 1s ease all;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal__window.active{
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal__bg{
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.5s ease all;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal__bg.active{
+  opacity: 1;
+  pointer-events: all;
+}
