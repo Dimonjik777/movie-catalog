@@ -53,9 +53,20 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
               <div>
                 <div className='modal__title'>
                   <h1>{movieInfo.Title}</h1>
-                  <FavoriteMoviesBtn onClick={() => {
-                    onChooseMovie(prev => [...prev, {movieId: movieId, movieTitle: movieInfo.Title, moviePoster: movieInfo.Poster}])
-                    }} /></div>
+                  <FavoriteMoviesBtn onClick={() => onChooseMovie(prev => {
+
+                    // Check favorite movie or no
+                    const checkMovie = prev.some(movie => movie.movieId === movieId);
+
+                    // Delete movie from favorite
+                    if (checkMovie)
+                      return prev.filter(element => element.movieId !== movieId)
+
+                    // Add movie to favorite
+                    else
+                      return [...prev, { movieId: movieId, movieTitle: movieInfo.Title, moviePoster: movieInfo.Poster }]
+                  }
+                  )} /></div>
                 <h2>Genre: {movieInfo.Genre.toLowerCase()}</h2>
                 <h2>Type: {movieInfo.Type}</h2>
                 <h2>imdbRating: {movieInfo.imdbRating}</h2>
