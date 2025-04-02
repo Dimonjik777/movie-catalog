@@ -3,11 +3,11 @@ import SearchMovies from "./components/SearchMovies"
 import ModalWindow from "./components/ModalWindow";
 import noPoster from "./assets/no poster.png"
 import useModal from "./hooks/useModal";
-import FavoriteMovies from "./components/FavoriteMovies";
+import FavoriteMoviesBtn from "./components/FavoriteMoviesBtn";
 
 function App() {
 
-  // search input data
+  // Search input data
   const [searchQuery, setSearchQuery] = useState("");
   function handleChangeSearch(event) {
     setSearchQuery(event.target.value);
@@ -19,8 +19,11 @@ function App() {
   // Loading circle during API request
   const [isLoading, setIsLoading] = useState(false);
 
-  // using hook for modal window
+  // Using hook for modal window
   const { modal, openSelectMovie, closeModal } = useModal();
+
+  // Choose favorite movies
+  const [favoriteMovies, setFavoriteMovies] = useState([]);
 
   useEffect(() => {
 
@@ -51,7 +54,7 @@ function App() {
       <div className="container">
         <div className="container__top">
           <SearchMovies search={searchQuery} onChangeSearch={handleChangeSearch} />
-          <FavoriteMovies />
+          <FavoriteMoviesBtn place={"main"} />
         </div>
         <div className="movies">
           {
@@ -75,7 +78,12 @@ function App() {
               )}
         </div>
       </div>
-      <ModalWindow isActive={modal.isActive} windowType={modal.type} movieId={modal.movieId} onCloseModal={closeModal} />
+      <ModalWindow
+      isActive={modal.isActive}
+      windowType={modal.type}
+      movieId={modal.movieId}
+      onCloseModal={closeModal}
+      onChooseMovie={setFavoriteMovies}/>
     </>
   )
 }

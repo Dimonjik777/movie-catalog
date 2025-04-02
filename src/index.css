@@ -122,6 +122,15 @@ body{
   margin-right: 25px;
 }
 
+.modal__title{
+  display: flex;
+  align-items: center;
+}
+
+.modal__title h1{
+  margin-right: 25px;
+}
+
 .modal__window div{
   width: 800px;
 }
@@ -143,4 +152,8 @@ body{
   border-radius: 10px;
   border: none;
   cursor: pointer;
+}
+
+.favorite__btn img{
+  width: 45px;
 }
