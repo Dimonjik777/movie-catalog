@@ -19,10 +19,9 @@ body{
   height: 60px;
   border-radius: 10px;
   font-size: 24px;
-  margin: 0 auto;
   display: block;
-  margin-top: 70px;
   padding-left: 25px;
+  margin-right: 25px;
 }
 
 .search__movie::placeholder{
@@ -129,4 +128,19 @@ body{
 
 .modal__loading{
   margin: auto;
+}
+
+.container__top{
+  display: flex;
+  align-items: center;
+  margin-top: 70px;
+  justify-content: center;
+}
+
+.favorite__btn{
+  background-color: #fff;
+  padding: 6px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
 }

@@ -3,6 +3,7 @@ import SearchMovies from "./components/SearchMovies"
 import ModalWindow from "./components/ModalWindow";
 import noPoster from "./assets/no poster.png"
 import useModal from "./hooks/useModal";
+import FavoriteMovies from "./components/FavoriteMovies";
 
 function App() {
 
@@ -19,7 +20,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   // using hook for modal window
-  const {modal, openSelectMovie, closeModal} = useModal();
+  const { modal, openSelectMovie, closeModal } = useModal();
 
   useEffect(() => {
 
@@ -48,8 +49,10 @@ function App() {
   return (
     <>
       <div className="container">
-        <SearchMovies search={searchQuery} onChangeSearch={handleChangeSearch} />
-
+        <div className="container__top">
+          <SearchMovies search={searchQuery} onChangeSearch={handleChangeSearch} />
+          <FavoriteMovies />
+        </div>
         <div className="movies">
           {
             isLoading ? (<img className="loading" src="src/assets/circle-loading.png" />)
