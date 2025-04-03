@@ -23,7 +23,17 @@ function App() {
   const { modal, openSelectMovie, closeModal, openFavoriteMovies } = useModal();
 
   // Choose favorite movies
-  const [favoriteMovies, setFavoriteMovies] = useState([]);
+  const [favoriteMovies, setFavoriteMovies] = useState(() => {
+    const savedMovies = localStorage.getItem("favoriteMovies");
+    return savedMovies ? JSON.parse(savedMovies) : [];
+  });
+
+  useEffect(() => {
+    // Save favorite movies in localStorage
+    if (favoriteMovies.length > 0)
+      localStorage.setItem("favoriteMovies", JSON.stringify(favoriteMovies));
+
+  }, [favoriteMovies]);
 
   useEffect(() => {
 
@@ -79,14 +89,14 @@ function App() {
         </div>
       </div>
       <ModalWindow
-      isActive={modal.isActive}
-      windowType={modal.type}
-      movieId={modal.movieId}
-      onCloseModal={closeModal}
-      onChooseMovie={setFavoriteMovies}
-      favoriteMovies={favoriteMovies}
-      onNewFavoriteMovies={setFavoriteMovies}
-      onOpenSelectMovie={openSelectMovie}/>
+        isActive={modal.isActive}
+        windowType={modal.type}
+        movieId={modal.movieId}
+        onCloseModal={closeModal}
+        onChooseMovie={setFavoriteMovies}
+        favoriteMovies={favoriteMovies}
+        onNewFavoriteMovies={setFavoriteMovies}
+        onOpenSelectMovie={openSelectMovie} />
     </>
   )
 }
