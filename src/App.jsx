@@ -85,7 +85,8 @@ function App() {
       onCloseModal={closeModal}
       onChooseMovie={setFavoriteMovies}
       favoriteMovies={favoriteMovies}
-      onNewFavoriteMovies={setFavoriteMovies}/>
+      onNewFavoriteMovies={setFavoriteMovies}
+      onOpenSelectMovie={openSelectMovie}/>
     </>
   )
 }

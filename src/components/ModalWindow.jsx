@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import FavoriteMoviesBtn from './FavoriteMoviesBtn';
 import noPoster from "../assets/no poster.png";
 
-const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovie, favoriteMovies, onNewFavoriteMovies }) => {
+const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovie, favoriteMovies, onNewFavoriteMovies, onOpenSelectMovie }) => {
 
   // Defines the height of the window
   let height = windowType == "movie" ? 380
@@ -98,7 +98,8 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
               <div key={element.Id} className="modal__movie">
                 <img className='movie__img' src={element.Poster !== "N/A" ?
                   element.Poster :
-                  noPoster} alt="" />
+                  noPoster}
+                  onClick={() => onOpenSelectMovie(element.Id)} alt="" />
                 <h1>{element.Title}</h1>
                 <FavoriteMoviesBtn
                   isActive={localFavoriteMovies.some(movie =>
@@ -131,7 +132,7 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
       }
         onClick={() => {
           onCloseModal();
-          
+
           // Save new favorite movies
           onNewFavoriteMovies(localFavoriteMovies);
           }}></div>
