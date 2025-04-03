@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import FavoriteMoviesBtn from './FavoriteMoviesBtn';
+import noPoster from "../assets/no poster.png";
 
-const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovie }) => {
+const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovie, favoriteMovies }) => {
 
   // Defines the height of the window
-  let height = windowType == "movie" && 380;
+  let height = windowType == "movie" ? 380
+    :
+    windowType == "favoriteMovies" ? 900 : 0;
 
   // Detailed info about movie
   const [movieInfo, setMovieInfo] = useState(null);
@@ -14,7 +17,10 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
 
   useEffect(() => {
 
-    if (!movieId) return;
+    if (!movieId) {
+      setMovieInfo(null);
+      return;
+    }
 
     setIsLoading(true);
 
@@ -48,7 +54,7 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
       >
         {isLoading ? (<img className="loading loading__modal" src="src/assets/circle-loading black.png" />) :
           (movieInfo && (
-            <>
+            <div className="show__movie">
               <img className='modal__img' src={movieInfo.Poster} alt="" />
               <div>
                 <div className='modal__title'>
@@ -64,7 +70,7 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
 
                     // Add movie to favorite
                     else
-                      return [...prev, { movieId: movieId, movieTitle: movieInfo.Title, moviePoster: movieInfo.Poster }]
+                      return [...prev, { Id: movieId, Title: movieInfo.Title, Poster: movieInfo.Poster }]
                   }
                   )} /></div>
                 <h2>Genre: {movieInfo.Genre.toLowerCase()}</h2>
@@ -74,8 +80,21 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
                   movieInfo.Plot.slice(0, 500) + "..." :
                   movieInfo.Plot}</p>
               </div>
-            </>
+            </div>
           ))}
+        <div className={windowType == "favoriteMovies" ? "favorite__movies active" : "favorite__movies"}>
+          
+          {windowType == "favoriteMovies" &&
+            favoriteMovies.map(element => (
+              <div key={element.Id} className="modal__movie">
+                <img className='movie__img' src={element.Poster !== "N/A" ?
+                  element.Poster :
+                  noPoster} alt="" />
+                <h1>{element.Title}</h1>
+              </div>
+            ))}
+
+        </div>
 
       </div>
       <div className={isActive ?

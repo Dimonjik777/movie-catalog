@@ -20,7 +20,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   // Using hook for modal window
-  const { modal, openSelectMovie, closeModal } = useModal();
+  const { modal, openSelectMovie, closeModal, openFavoriteMovies } = useModal();
 
   // Choose favorite movies
   const [favoriteMovies, setFavoriteMovies] = useState([]);
@@ -54,7 +54,7 @@ function App() {
       <div className="container">
         <div className="container__top">
           <SearchMovies search={searchQuery} onChangeSearch={handleChangeSearch} />
-          <FavoriteMoviesBtn place={"main"} />
+          <FavoriteMoviesBtn onClick={openFavoriteMovies} place={"main"} />
         </div>
         <div className="movies">
           {
@@ -83,7 +83,8 @@ function App() {
       windowType={modal.type}
       movieId={modal.movieId}
       onCloseModal={closeModal}
-      onChooseMovie={setFavoriteMovies}/>
+      onChooseMovie={setFavoriteMovies}
+      favoriteMovies={favoriteMovies}/>
     </>
   )
 }

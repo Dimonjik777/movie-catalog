@@ -26,7 +26,16 @@ const useModal = () => {
         movieId: null
       });
     }
-  return {modal, openSelectMovie, closeModal};
+
+      // Open modal for favorite movies
+      function openFavoriteMovies(){
+        setModal({
+          isActive: true,
+          type: "favoriteMovies",
+          movieId: null
+        })
+      }
+  return {modal, openSelectMovie, closeModal, openFavoriteMovies};
 }
 
 export default useModal

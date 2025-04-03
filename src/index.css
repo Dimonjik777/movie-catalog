@@ -7,6 +7,7 @@
 body{
   background-color: #242424;
   font-family: "Rubik", sans-serif;
+  overflow: hidden;
 }
 
 .container{
@@ -84,14 +85,20 @@ body{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -40%);
-  transition: transform .5s ease, opacity .5s ease;
+  transition: transform .5s ease, opacity .5s ease, height .5s ease;
   opacity: 0;
   pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   color: black;
   padding: 40px 45px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.show__movie{
+  display: flex;
+  align-items: center;
+  width: 800px;
 }
 
 .modal__window.active{
@@ -131,10 +138,6 @@ body{
   margin-right: 25px;
 }
 
-.modal__window div{
-  width: 800px;
-}
-
 .modal__loading{
   margin: auto;
 }
@@ -156,4 +159,24 @@ body{
 
 .favorite__btn img{
   width: 45px;
+}
+
+.favorite__movies{
+  display: grid;
+  grid-template-columns: repeat(4, 200px);
+  grid-auto-rows: min-content;
+  justify-content: space-between;
+  gap: 10px;
+  height: 900px;
+  pointer-events: none;
+  height: 0;
+}
+
+.favorite__movies.active{
+  pointer-events: all;
+  height: 900px;
+}
+
+.modal__movie h1{
+  color: black;
 }
