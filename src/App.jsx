@@ -84,7 +84,8 @@ function App() {
       movieId={modal.movieId}
       onCloseModal={closeModal}
       onChooseMovie={setFavoriteMovies}
-      favoriteMovies={favoriteMovies}/>
+      favoriteMovies={favoriteMovies}
+      onNewFavoriteMovies={setFavoriteMovies}/>
     </>
   )
 }

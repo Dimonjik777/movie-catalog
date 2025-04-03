@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import FavoriteMoviesBtn from './FavoriteMoviesBtn';
 import noPoster from "../assets/no poster.png";
 
-const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovie, favoriteMovies }) => {
+const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovie, favoriteMovies, onNewFavoriteMovies }) => {
 
   // Defines the height of the window
   let height = windowType == "movie" ? 380
@@ -14,6 +14,13 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
 
   // Loading circle during API request
   const [isLoading, setIsLoading] = useState(false);
+
+  // Create local storage with favorite movies
+  const [localFavoriteMovies, setLocalFavoriteMovies] = useState(favoriteMovies);
+
+  useEffect(() =>{
+    setLocalFavoriteMovies(favoriteMovies);
+  }, [favoriteMovies]);
 
   useEffect(() => {
 
@@ -59,20 +66,22 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
               <div>
                 <div className='modal__title'>
                   <h1>{movieInfo.Title}</h1>
-                  <FavoriteMoviesBtn onClick={() => onChooseMovie(prev => {
+                  <FavoriteMoviesBtn
+                    isActive={favoriteMovies.some(movie => movie.Id === movieId)}
+                    onClick={() => onChooseMovie(prev => {
 
-                    // Check favorite movie or no
-                    const checkMovie = prev.some(movie => movie.movieId === movieId);
+                      // Check favorite movie or no
+                      const checkMovie = prev.some(movie => movie.movieId === movieId);
 
-                    // Delete movie from favorite
-                    if (checkMovie)
-                      return prev.filter(element => element.movieId !== movieId)
+                      // Delete movie from favorite
+                      if (checkMovie)
+                        return prev.filter(element => element.movieId !== movieId)
 
-                    // Add movie to favorite
-                    else
-                      return [...prev, { Id: movieId, Title: movieInfo.Title, Poster: movieInfo.Poster }]
-                  }
-                  )} /></div>
+                      // Add movie to favorite
+                      else
+                        return [...prev, { Id: movieId, Title: movieInfo.Title, Poster: movieInfo.Poster }]
+                    }
+                    )} /></div>
                 <h2>Genre: {movieInfo.Genre.toLowerCase()}</h2>
                 <h2>Type: {movieInfo.Type}</h2>
                 <h2>imdbRating: {movieInfo.imdbRating}</h2>
@@ -83,7 +92,7 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
             </div>
           ))}
         <div className={windowType == "favoriteMovies" ? "favorite__movies active" : "favorite__movies"}>
-          
+
           {windowType == "favoriteMovies" &&
             favoriteMovies.map(element => (
               <div key={element.Id} className="modal__movie">
@@ -91,6 +100,25 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
                   element.Poster :
                   noPoster} alt="" />
                 <h1>{element.Title}</h1>
+                <FavoriteMoviesBtn
+                  isActive={localFavoriteMovies.some(movie =>
+                    movie.Id === element.Id
+                  )}
+                  onClick={() => {
+
+                    setLocalFavoriteMovies(prevMovies => {
+                      let movieInLocalStorage = localFavoriteMovies.some(movie => movie.Id === element.Id);
+
+                      // If movie in favorite, delete him
+                      if (movieInLocalStorage) {
+                        return prevMovies.filter(movie => movie.Id !== element.Id);
+                      }
+                      // If movie not in favorite, add him
+                      else {
+                        return [...prevMovies, { Id: element.Id, Title: element.Title, Poster: element.Poster }];
+                      }
+                    });
+                  }} />
               </div>
             ))}
 
@@ -101,7 +129,12 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
         "modal__bg active" :
         "modal__bg"
       }
-        onClick={onCloseModal}></div>
+        onClick={() => {
+          onCloseModal();
+          
+          // Save new favorite movies
+          onNewFavoriteMovies(localFavoriteMovies);
+          }}></div>
     </>
   )
 }
