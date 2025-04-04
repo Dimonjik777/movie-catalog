@@ -4,6 +4,7 @@ import ModalWindow from "./components/ModalWindow";
 import noPoster from "./assets/no poster.png"
 import useModal from "./hooks/useModal";
 import FavoriteMoviesBtn from "./components/FavoriteMoviesBtn";
+import SkeletonMovie from "./components/SkeletonMovie";
 
 function App() {
 
@@ -79,7 +80,9 @@ function App() {
         </div>
         <div className="movies">
           {
-            isLoading ? (<img className="loading" src="src/assets/circle-loading.png" />)
+            isLoading ? (
+              [...Array(10)].map((_, index) => <SkeletonMovie key={index} />)
+            )
               :
               (searchQuery != "" && movies.length === 0 ?
                 (<p className="not__found">Movie not found</p>)

@@ -179,3 +179,20 @@ body{
 .modal__movie h1{
   color: black;
 }
+
+.movie__skeleton .movie__img{
+  background-color: #fff;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse{
+  0%{
+    opacity: 1;
+  }
+  50%{
+    opacity: 0.5;
+  }
+  100%{
+    opacity: 1;
+  }
+}
