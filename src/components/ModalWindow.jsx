@@ -132,7 +132,6 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
                       // If movie not in favorite, add him
                       else {
                         return [...prevMovies, {
-                          Id: movieId,
                           movieId: movieId,
                           Title: movieInfo.Title,
                           Poster: movieInfo.Poster,
