@@ -18,7 +18,7 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
   // Create local storage with favorite movies
   const [localFavoriteMovies, setLocalFavoriteMovies] = useState(favoriteMovies);
 
-  useEffect(() =>{
+  useEffect(() => {
     setLocalFavoriteMovies(favoriteMovies);
   }, [favoriteMovies]);
 
@@ -29,10 +29,10 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
       return;
     }
 
-    // Render data from favorite movies if movie saved
-    if(favoriteMovies.some(movie => movie.Id === movieId)){
-      const selectMovie = favoriteMovies.filter(movie => movie.Id === movieId);
-      setMovieInfo(...selectMovie);
+    // Load movie from local storage if he saved
+    if(favoriteMovies.some(movie => movie.movieId === movieId)){
+      const savedMovie = favoriteMovies.find(movie => movie.movieId === movieId);
+      setMovieInfo(savedMovie);
       return;
     }
 
@@ -74,7 +74,7 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
                 <div className='modal__title'>
                   <h1>{movieInfo.Title}</h1>
                   <FavoriteMoviesBtn
-                    isActive={favoriteMovies.some(movie => movie.Id === movieId)}
+                    isActive={favoriteMovies.some(movie => movie.movieId === movieId)}
                     onClick={() => onChooseMovie(prev => {
 
                       // Check favorite movie or no
@@ -82,18 +82,19 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
 
                       // Delete movie from favorite
                       if (checkMovie)
-                        return prev.filter(element => element.movieId !== movieId)
+                        return prev.filter(movie => movie.movieId !== movieId)
 
                       // Add movie to favorite
                       else
                         return [...prev, {
-                      Id: movieId,
-                      Title: movieInfo.Title,
-                      Poster: movieInfo.Poster,
-                      Genre: movieInfo.Genre,
-                      Type: movieInfo.Type,
-                      imdbRating: movieInfo.imdbRating,
-                      Plot: movieInfo.Plot}]
+                          movieId: movieId,
+                          Title: movieInfo.Title,
+                          Poster: movieInfo.Poster,
+                          Genre: movieInfo.Genre,
+                          Type: movieInfo.Type,
+                          imdbRating: movieInfo.imdbRating,
+                          Plot: movieInfo.Plot
+                        }]
                     }
                     )} /></div>
                 <h2>Genre: {movieInfo.Genre.toLowerCase()}</h2>
@@ -109,35 +110,37 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
 
           {windowType == "favoriteMovies" &&
             favoriteMovies.map(element => (
-              <div key={element.Id} className="modal__movie">
+              <div key={element.movieId} className="modal__movie">
                 <img className='movie__img' src={element.Poster !== "N/A" ?
                   element.Poster :
                   noPoster}
-                  onClick={() => onOpenSelectMovie(element.Id)} alt="" />
+                  onClick={() => onOpenSelectMovie(element.movieId)} alt="" />
                 <h1>{element.Title}</h1>
                 <FavoriteMoviesBtn
                   isActive={localFavoriteMovies.some(movie =>
-                    movie.Id === element.Id
+                    movie.movieId === element.movieId
                   )}
                   onClick={() => {
 
                     setLocalFavoriteMovies(prevMovies => {
-                      let movieInLocalStorage = localFavoriteMovies.some(movie => movie.Id === element.Id);
+                      let movieInLocalStorage = localFavoriteMovies.some(movie => movie.movieId === element.movieId);
 
                       // If movie in favorite, delete him
                       if (movieInLocalStorage) {
-                        return prevMovies.filter(movie => movie.Id !== element.Id);
+                        return prevMovies.filter(movie => movie.movieId !== element.movieId);
                       }
                       // If movie not in favorite, add him
                       else {
                         return [...prevMovies, {
                           Id: movieId,
+                          movieId: movieId,
                           Title: movieInfo.Title,
                           Poster: movieInfo.Poster,
                           Genre: movieInfo.Genre,
                           Type: movieInfo.Type,
                           imdbRating: movieInfo.imdbRating,
-                          Plot: movieInfo.Plot}];
+                          Plot: movieInfo.Plot
+                        }];
                       }
                     });
                   }} />
@@ -156,7 +159,7 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
 
           // Save new favorite movies
           onNewFavoriteMovies(localFavoriteMovies);
-          }}></div>
+        }}></div>
     </>
   )
 }
