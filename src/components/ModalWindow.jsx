@@ -29,6 +29,13 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
       return;
     }
 
+    // Render data from favorite movies if movie saved
+    if(favoriteMovies.some(movie => movie.Id === movieId)){
+      const selectMovie = favoriteMovies.filter(movie => movie.Id === movieId);
+      setMovieInfo(...selectMovie);
+      return;
+    }
+
     setIsLoading(true);
 
     fetch(`http://www.omdbapi.com/?i=${movieId}&plot=full&apikey=1ae6eafe`)
@@ -79,7 +86,14 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
 
                       // Add movie to favorite
                       else
-                        return [...prev, { Id: movieId, Title: movieInfo.Title, Poster: movieInfo.Poster }]
+                        return [...prev, {
+                      Id: movieId,
+                      Title: movieInfo.Title,
+                      Poster: movieInfo.Poster,
+                      Genre: movieInfo.Genre,
+                      Type: movieInfo.Type,
+                      imdbRating: movieInfo.imdbRating,
+                      Plot: movieInfo.Plot}]
                     }
                     )} /></div>
                 <h2>Genre: {movieInfo.Genre.toLowerCase()}</h2>
@@ -116,7 +130,14 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
                       }
                       // If movie not in favorite, add him
                       else {
-                        return [...prevMovies, { Id: element.Id, Title: element.Title, Poster: element.Poster }];
+                        return [...prevMovies, {
+                          Id: movieId,
+                          Title: movieInfo.Title,
+                          Poster: movieInfo.Poster,
+                          Genre: movieInfo.Genre,
+                          Type: movieInfo.Type,
+                          imdbRating: movieInfo.imdbRating,
+                          Plot: movieInfo.Plot}];
                       }
                     });
                   }} />
