@@ -98,7 +98,6 @@ body{
 .show__movie{
   display: flex;
   align-items: center;
-  width: 800px;
 }
 
 .modal__window.active{

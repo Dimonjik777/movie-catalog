@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import SearchMovies from "./components/SearchMovies"
 import ModalWindow from "./components/ModalWindow";
 import noPoster from "./assets/no poster.png"
@@ -12,6 +12,9 @@ function App() {
   function handleChangeSearch(event) {
     setSearchQuery(event.target.value);
   }
+
+  // Save timer in input
+  const timeoutRef = useRef(null);
 
   //  Movies on main page
   const [movies, setMovies] = useState([]);
@@ -28,8 +31,8 @@ function App() {
     return savedMovies ? JSON.parse(savedMovies) : [];
   });
 
+  // Save favorite movies in localStorage
   useEffect(() => {
-    // Save favorite movies in localStorage
     if (favoriteMovies.length > 0)
       localStorage.setItem("favoriteMovies", JSON.stringify(favoriteMovies));
 
@@ -40,23 +43,31 @@ function App() {
     if (searchQuery == "")
       return;
 
-    setIsLoading(true);
+    // Clear timer if user typing
+    if(timeoutRef.current)
+      clearTimeout(timeoutRef.current);
 
-    fetch(`https://www.omdbapi.com/?s=${searchQuery}&apikey=1ae6eafe`)
-      .then(response => response.json())
-      .then(json => {
-        if (json.Response == "True")
-          setMovies(json.Search);
-        else
-          setMovies([]);
+    // Make API query after 500 ms
+    timeoutRef.current = setTimeout(() => {
 
-        setIsLoading(false);
-      }
-      )
-      .catch(error => {
-        console.error(error)
-        setIsLoading(false);
-      })
+      setIsLoading(true);
+
+      fetch(`https://www.omdbapi.com/?s=${searchQuery}&apikey=1ae6eafe`)
+        .then(response => response.json())
+        .then(json => {
+          if (json.Response == "True")
+            setMovies(json.Search);
+          else
+            setMovies([]);
+
+          setIsLoading(false);
+        }
+        )
+        .catch(error => {
+          console.error(error)
+          setIsLoading(false);
+        })
+    }, 500);
   }, [searchQuery]);
 
   return (
@@ -70,7 +81,7 @@ function App() {
           {
             isLoading ? (<img className="loading" src="src/assets/circle-loading.png" />)
               :
-              (searchQuery != "" && movies.length == 0 ?
+              (searchQuery != "" && movies.length === 0 ?
                 (<p className="not__found">Movie not found</p>)
                 :
                 (movies.map(element => (
