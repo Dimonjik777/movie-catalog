@@ -8,6 +8,8 @@ import SkeletonMovie from "./components/SkeletonMovie";
 
 function App() {
 
+  const API_KEY = import.meta.env.VITE_API_KEY;
+
   // Search input data
   const [searchQuery, setSearchQuery] = useState("");
   function handleChangeSearch(event) {
@@ -53,7 +55,7 @@ function App() {
 
       setIsLoading(true);
 
-      fetch(`https://www.omdbapi.com/?s=${searchQuery}&apikey=1ae6eafe`)
+      fetch(`https://www.omdbapi.com/?s=${searchQuery}&apikey=${API_KEY}`)
         .then(response => response.json())
         .then(json => {
           if (json.Response == "True")
