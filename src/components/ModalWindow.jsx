@@ -44,7 +44,7 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
 
     setIsLoading(true);
 
-    fetch(`http://www.omdbapi.com/?i=${movieId}&plot=full&apikey=${API_KEY}`)
+    fetch(`https://www.omdbapi.com/?i=${movieId}&plot=full&apikey=${API_KEY}`)
       .then(response => response.json())
       .then(json => {
         if (json.Response == "True") {
