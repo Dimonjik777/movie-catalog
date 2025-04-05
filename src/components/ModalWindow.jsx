@@ -9,6 +9,10 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
     :
     windowType == "favoriteMovies" ? 900 : 0;
 
+  if (window.innerWidth <= 950) {
+    height = "auto";
+  }
+
   // Detailed info about movie
   const [movieInfo, setMovieInfo] = useState(null);
 
@@ -30,7 +34,7 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
     }
 
     // Load movie from local storage if he saved
-    if(favoriteMovies.some(movie => movie.movieId === movieId)){
+    if (favoriteMovies.some(movie => movie.movieId === movieId)) {
       const savedMovie = favoriteMovies.find(movie => movie.movieId === movieId);
       setMovieInfo(savedMovie);
       return;
