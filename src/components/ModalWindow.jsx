@@ -98,14 +98,14 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
                           Type: movieInfo.Type,
                           imdbRating: movieInfo.imdbRating,
                           Plot: movieInfo.Plot
-                        }]
+                        }];
                     }
                     )} /></div>
                 <h2>Genre: {movieInfo.Genre.toLowerCase()}</h2>
                 <h2>Type: {movieInfo.Type}</h2>
                 <h2>imdbRating: {movieInfo.imdbRating}</h2>
-                <p>Plot: {movieInfo.Plot.length > 500 ?
-                  movieInfo.Plot.slice(0, 500) + "..." :
+                <p>Plot: {movieInfo.Plot.length > 350 ?
+                  movieInfo.Plot.slice(0, 350) + "..." :
                   movieInfo.Plot}</p>
               </div>
             </div>
@@ -118,7 +118,10 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
                 <img className='movie__img' src={element.Poster !== "N/A" ?
                   element.Poster :
                   noPoster}
-                  onClick={() => onOpenSelectMovie(element.movieId)} alt="" />
+                  onClick={() => {
+                    onNewFavoriteMovies(localFavoriteMovies);
+                    onOpenSelectMovie(element.movieId)
+                    }} alt="" />
                 <h1>{element.Title}</h1>
                 <FavoriteMoviesBtn
                   isActive={localFavoriteMovies.some(movie =>
@@ -136,13 +139,13 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
                       // If movie not in favorite, add him
                       else {
                         return [...prevMovies, {
-                          movieId: movieId,
-                          Title: movieInfo.Title,
-                          Poster: movieInfo.Poster,
-                          Genre: movieInfo.Genre,
-                          Type: movieInfo.Type,
-                          imdbRating: movieInfo.imdbRating,
-                          Plot: movieInfo.Plot
+                          movieId: element.movieId,
+                          Title: element.Title,
+                          Poster: element.Poster,
+                          Genre: element.Genre,
+                          Type: element.Type,
+                          imdbRating: element.imdbRating,
+                          Plot: element.Plot
                         }];
                       }
                     });
