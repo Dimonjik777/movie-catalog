@@ -107,8 +107,8 @@ body{
 }
 
 .modal__bg{
-  width: 99vw;
-  height: 99vh;
+  width: 100vw;
+  height: 100vh;
   background-color: rgba(0,0,0, 0.5);
   position: absolute;
   top: 0;
@@ -194,5 +194,48 @@ body{
   }
   100%{
     opacity: 1;
+  }
+}
+
+/* Adaptive for site */ 
+
+@media screen and (max-width: 1150px){
+  .container{
+    width: auto;
+  }
+
+  .movies .movie{
+    margin: 0 15px;
+  }
+
+  .modal__window{
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 1020px){
+  .favorite__movies{
+    grid-template-columns: repeat(3, 200px);
+  }
+}
+
+@media screen and (max-width: 950px){
+
+  .modal__window .show__movie{
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 820px){
+
+  .favorite__movies{
+    grid-template-columns: repeat(2, 200px);
+  }
+}
+
+@media screen and (max-width: 700px){
+
+  .movies .movie{
+    margin: 0 35px;
   }
 }
