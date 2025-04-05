@@ -181,7 +181,7 @@ body{
 }
 
 .movie__skeleton .movie__img{
-  background-color: #fff;
+  background-color: #DDD;
   animation: pulse 1s infinite;
 }
 

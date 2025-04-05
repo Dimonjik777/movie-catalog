@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import FavoriteMoviesBtn from './FavoriteMoviesBtn';
 import noPoster from "../assets/no poster.png";
+import SkeletonMovie from './SkeletonMovie';
 
 const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovie, favoriteMovies, onNewFavoriteMovies, onOpenSelectMovie }) => {
 
@@ -72,7 +73,7 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
           height: height
         }}
       >
-        {isLoading ? (<img className="loading loading__modal" src="src/assets/circle-loading black.png" />) :
+        {isLoading ? (<SkeletonMovie />) :
           (movieInfo && (
             <div className="show__movie">
               <img className='modal__img' src={movieInfo.Poster} alt="" />
