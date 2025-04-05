@@ -13,6 +13,8 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
     height = "auto";
   }
 
+  const API_KEY = import.meta.env.VITE_API_KEY;
+
   // Detailed info about movie
   const [movieInfo, setMovieInfo] = useState(null);
 
@@ -42,7 +44,7 @@ const ModalWindow = ({ isActive, windowType, movieId, onCloseModal, onChooseMovi
 
     setIsLoading(true);
 
-    fetch(`http://www.omdbapi.com/?i=${movieId}&plot=full&apikey=1ae6eafe`)
+    fetch(`http://www.omdbapi.com/?i=${movieId}&plot=full&apikey=${API_KEY}`)
       .then(response => response.json())
       .then(json => {
         if (json.Response == "True") {
